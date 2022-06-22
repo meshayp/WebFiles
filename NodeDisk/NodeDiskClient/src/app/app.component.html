@@ -1,0 +1,44 @@
+<div>this is sites</div>
+
+<div style="display: flex;">
+
+<div style="display: inline-block; width : 40%">
+  
+    <button *ngFor="let item of dirPath"  style="display: inline;"  (click) = "this.pathClick($event)" >
+      <!-- <div style="display: inline;" (click) = "this.pathClick($event)" >{{item}}</div> -->
+      <!-- <h2 style="display: inline;">\</h2> -->
+      {{item}}
+    </button>
+    
+  
+    <div *ngIf="dirs$ | async as data" >   
+      
+      <h1>Dirs</h1>
+      <div *ngFor="let item of data.dirs">
+        <div (click)="this.basedir.next(data.base + '\\' + item); this.dirPath.push(item.trim());" >{{item}}</div>
+      </div>  
+    
+      <h1>Files</h1>
+      <div *ngFor="let item of data.files">
+        <button style="display:inline-block" *ngIf="!(item.stat && item.stat.size)" (click)="this.getFileInfo(data.base, item.name, item)">info</button>
+        <button style="display:inline-block" *ngIf="item.stat && item.stat.size" >{{item.stat.size}}</button>
+        <div style="display:inline-block" (click)= "this.openFile(data.base, item.name)">{{item.name}}</div>
+        <!-- <button *ngIf="item." (click)="showFileInfo(data.base, item)">info</button> -->
+      </div>  
+  
+    
+   
+    </div>
+</div>
+
+
+<div style="display: inline-block; width : 40%">
+    
+    <div>{{openFilePath}}</div>
+    <!-- <div>this is second div</div> -->
+    <iframe width="100%" height="100%" [src]="iframeurl | safe: 'resourceUrl'"></iframe>
+  
+</div>
+
+
+</div>
